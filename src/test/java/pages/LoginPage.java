@@ -10,18 +10,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class LoginPage {
+
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    // Локатор поля для ввода логина
     @FindBy(css = "[data-test='username-field']")
     private WebElement usernameField;
 
-    // Локатор поля для ввода пароля
     @FindBy(css = "[data-test='password-field']")
     private WebElement passwordField;
 
-    // Локатор кнопки "Log in", по-приколу через относительный локатор
     @FindBy(xpath = "//button[@data-test='login-button']")
     private WebElement loginButton;
 
@@ -31,37 +29,51 @@ public class LoginPage {
         PageFactory.initElements(driver, this);
     }
 
-    // Открывает страницу логина
+    /**
+     * Открывает главную страницу приложения (страницу авторизации).
+     */
     public void open() {
         driver.get("http://localhost:8080");
     }
 
-    // Вводит логин
+    /**
+     * Вводит имя пользователя в соответствующее поле.
+     */
     public void enterUsername(String username) {
         wait.until(ExpectedConditions.visibilityOf(usernameField));
         usernameField.clear();
         usernameField.sendKeys(username);
     }
 
-    // Водит пароль
+    /**
+     * Вводит пароль в соответствующее поле.
+     */
     public void enterPassword(String password) {
+        wait.until(ExpectedConditions.visibilityOf(passwordField));
         passwordField.clear();
         passwordField.sendKeys(password);
     }
 
-    // Жмет кнопку LogIn
+    /**
+     * Нажимает кнопку входа в систему.
+     */
     public void clickLoginButton() {
         wait.until(ExpectedConditions.elementToBeClickable(loginButton));
         loginButton.click();
     }
 
-    // Вызов полной авторизации
+    /**
+     * Выполняет полный процесс авторизации.
+     */
     public void login(String username, String password) {
         enterUsername(username);
         enterPassword(password);
         clickLoginButton();
     }
 
+    /**
+     * Проверяет, что страница авторизации успешно загружена.
+     */
     public boolean isLoginPageLoaded() {
         try {
             wait.until(ExpectedConditions.visibilityOf(usernameField));

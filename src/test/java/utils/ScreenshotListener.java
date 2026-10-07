@@ -13,7 +13,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Слушатель TestNG для автоматического создания скриншотов при падении тестов.
+ */
 public class ScreenshotListener implements ITestListener {
+
     @Override
     public void onTestSuccess(ITestResult result) {
         System.out.println("Тест пройден: " + result.getName());
@@ -25,12 +29,16 @@ public class ScreenshotListener implements ITestListener {
 
         Object testInstance = result.getInstance();
 
-        BaseTest baseTest = (BaseTest) testInstance;
+        // Безопасная проверка типа перед приведением
+        if (testInstance instanceof BaseTest) {
+            BaseTest baseTest = (BaseTest) testInstance;
+            WebDriver driver = baseTest.getDriver();
 
-        WebDriver driver = baseTest.getDriver();
-
-        if (driver != null) {
-            takeScreenshot(driver, result.getName());
+            if (driver != null) {
+                takeScreenshot(driver, result.getName());
+            }
+        } else {
+            System.err.println("Не удалось получить экземпляр BaseTest для создания скриншота.");
         }
     }
 
@@ -39,9 +47,14 @@ public class ScreenshotListener implements ITestListener {
         System.out.println("Тест пропущен: " + result.getName());
     }
 
+    /**
+     * Создает и сохраняет скриншот текущего состояния браузера.
+     *
+     * @param driver   экземпляр WebDriver
+     * @param testName имя упавшего теста
+     */
     private void takeScreenshot(WebDriver driver, String testName) {
         try {
-            //создаем папку для тестов, если ее нет
             File screenshotDir = new File("target/screenshots/");
             if (!screenshotDir.exists()) {
                 screenshotDir.mkdirs();
@@ -55,7 +68,7 @@ public class ScreenshotListener implements ITestListener {
             File destFile = new File(screenshotDir, fileName);
             FileUtils.copyFile(srcFile, destFile);
 
-            System.out.println(" Скриншот сохранён: " + destFile.getAbsolutePath());
+            System.out.println("Скриншот сохранён: " + destFile.getAbsolutePath());
         } catch (IOException e) {
             System.err.println("Не удалось сделать скриншот: " + e.getMessage());
         }

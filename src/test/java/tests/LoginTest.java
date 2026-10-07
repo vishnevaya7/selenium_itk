@@ -10,11 +10,15 @@ import pages.LoginPage;
 import pages.SearchPage;
 import utils.ScreenshotListener;
 
-//класс наблюдатель для скриншотов, если падает тест на ошибке
 @Listeners(ScreenshotListener.class)
 public class LoginTest extends BaseTest {
 
-    //метод логирования, вынесена логика авторизации
+    /**
+     * Вспомогательный метод для выполнения стандартной процедуры авторизации администратора.
+     * Позволяет избежать дублирования кода в позитивных тест-кейсах.
+     *
+     * @return экземпляр DashboardPage после успешного входа
+     */
     private DashboardPage loginAsAdmin() {
         LoginPage loginPage = new LoginPage(getDriver());
         DashboardPage dashboardPage = new DashboardPage(getDriver());
@@ -26,8 +30,9 @@ public class LoginTest extends BaseTest {
         return dashboardPage;
     }
 
-
-    // TC-001: Успешная авторизация в системе
+    /**
+     * TC-001: Успешная авторизация в системе (Положительный тест).
+     */
     @Test
     public void testSuccessfulLogin_TC001() {
         System.out.println("TC-001: Успешная авторизация");
@@ -40,7 +45,9 @@ public class LoginTest extends BaseTest {
         System.out.println("TC-001 ПРОЙДЕН");
     }
 
-    // TC-002: Проверка ошибки при неверных данных (Data-Driven)
+    /**
+     * TC-002: Проверка отображения ошибки при вводе невалидных учетных данных (Data-Driven).
+     */
     @DataProvider(name = "invalidLoginData")
     public Object[][] invalidLoginData() {
         return new Object[][] {
@@ -67,15 +74,18 @@ public class LoginTest extends BaseTest {
         System.out.println("TC-002 ПРОЙДЕН: Ошибка корректно показана");
     }
 
-
-    // TC-003: Создание новой задачи
+    /**
+     * TC-003: Создание новой задачи (Положительный тест).
+     * Прямой переход по URL используется для изоляции проверки функционала формы создания
+     * от потенциально нестабильных элементов навигации (выпадающих меню), что минимизирует
+     * риск возникновения флаки-тестов (flaky tests).
+     */
     @Test
     public void testCreateIssue_TC003() {
         System.out.println("TC-003: Создание новой задачи");
 
         loginAsAdmin();
 
-        // 2. переход прямой ссылкой, тк не дай бог будет флаки тест)))
         getDriver().get("http://localhost:8080/newIssue");
         System.out.println("Перешли на страницу создания задачи");
 
@@ -85,15 +95,17 @@ public class LoginTest extends BaseTest {
         System.out.println("TC-003 ПРОЙДЕН: Задача создана");
     }
 
-    // TC-004: Поиск созданной задачи
+    /**
+     * TC-004: Поиск созданной задачи по её идентификатору (Положительный тест).
+     * Поиск по ID является наиболее надежным способом проверки, так как ID уникален
+     * и не зависит от возможных изменений в формулировке названия задачи.
+     */
     @Test
     public void testSearchIssue_TC004() {
         System.out.println("TC-004: Поиск созданной задачи");
 
         loginAsAdmin();
 
-        // ищем по ID задачи
-        // или можно по названию
         String searchQuery = "DEMO-21";
 
         SearchPage searchPage = new SearchPage(getDriver());
@@ -106,7 +118,9 @@ public class LoginTest extends BaseTest {
         System.out.println("TC-004 ПРОЙДЕН: Задача '" + searchQuery + "' найдена");
     }
 
-    // TC-005: Выход из системы
+    /**
+     * TC-005: Выход из системы (Положительный тест).
+     */
     @Test
     public void testLogout_TC005() {
         System.out.println("TC-005: Выход из системы");

@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
-<!--
-  parallel="methods" означает, что TestNG будет запускать методы (@Test) параллельно.
-  thread-count="3" означает, что одновременно будет открыто не более 3 браузеров.
-  data-provider-thread-count="2" позволяет параллельно прогонять данные из @DataProvider.
--->
 <suite name="YouTrack Automation Suite" parallel="methods" thread-count="3" data-provider-thread-count="2">
+
+    <!-- Глобальная регистрация слушателя для создания скриншотов при падении тестов -->
+    <listeners>
+        <listener class-name="utils.ScreenshotListener"/>
+    </listeners>
 
     <test name="Login and Issue Management Tests">
         <classes>
-            <!-- Указываем наш класс с тестами -->
             <class name="tests.LoginTest"/>
         </classes>
     </test>
