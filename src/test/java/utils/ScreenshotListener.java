@@ -13,9 +13,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Слушатель TestNG для автоматического создания скриншотов при падении тестов.
- */
+//Слушатель TestNG для автоматического создания скриншотов при падении тестов.
 public class ScreenshotListener implements ITestListener {
 
     @Override
@@ -47,12 +45,12 @@ public class ScreenshotListener implements ITestListener {
         System.out.println("Тест пропущен: " + result.getName());
     }
 
-    /**
-     * Создает и сохраняет скриншот текущего состояния браузера.
-     *
-     * @param driver   экземпляр WebDriver
-     * @param testName имя упавшего теста
-     */
+//    /**
+//     * Создает и сохраняет скриншот текущего состояния браузера.
+//     *
+//     * @param driver   экземпляр WebDriver
+//     * @param testName имя упавшего теста
+//     */
     private void takeScreenshot(WebDriver driver, String testName) {
         try {
             File screenshotDir = new File("target/screenshots/");

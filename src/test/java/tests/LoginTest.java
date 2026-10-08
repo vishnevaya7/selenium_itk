@@ -13,12 +13,6 @@ import utils.ScreenshotListener;
 @Listeners(ScreenshotListener.class)
 public class LoginTest extends BaseTest {
 
-    /**
-     * Вспомогательный метод для выполнения стандартной процедуры авторизации администратора.
-     * Позволяет избежать дублирования кода в позитивных тест-кейсах.
-     *
-     * @return экземпляр DashboardPage после успешного входа
-     */
     private DashboardPage loginAsAdmin() {
         LoginPage loginPage = new LoginPage(getDriver());
         DashboardPage dashboardPage = new DashboardPage(getDriver());
@@ -30,9 +24,7 @@ public class LoginTest extends BaseTest {
         return dashboardPage;
     }
 
-    /**
-     * TC-001: Успешная авторизация в системе (Положительный тест).
-     */
+//    TC-001: Успешная авторизация в системе (Положительный тест).
     @Test
     public void testSuccessfulLogin_TC001() {
         System.out.println("TC-001: Успешная авторизация");
@@ -45,9 +37,7 @@ public class LoginTest extends BaseTest {
         System.out.println("TC-001 ПРОЙДЕН");
     }
 
-    /**
-     * TC-002: Проверка отображения ошибки при вводе невалидных учетных данных (Data-Driven).
-     */
+//    ТC-002: Проверка отображения ошибки при вводе невалидных учетных данных (Data-Driven)
     @DataProvider(name = "invalidLoginData")
     public Object[][] invalidLoginData() {
         return new Object[][] {
@@ -74,12 +64,7 @@ public class LoginTest extends BaseTest {
         System.out.println("TC-002 ПРОЙДЕН: Ошибка корректно показана");
     }
 
-    /**
-     * TC-003: Создание новой задачи (Положительный тест).
-     * Прямой переход по URL используется для изоляции проверки функционала формы создания
-     * от потенциально нестабильных элементов навигации (выпадающих меню), что минимизирует
-     * риск возникновения флаки-тестов (flaky tests).
-     */
+//    TC-003: Создание новой задачи (Положительный тест). Здесь прямая ссылка, чтобы не было флаки тестов
     @Test
     public void testCreateIssue_TC003() {
         System.out.println("TC-003: Создание новой задачи");
@@ -95,11 +80,7 @@ public class LoginTest extends BaseTest {
         System.out.println("TC-003 ПРОЙДЕН: Задача создана");
     }
 
-    /**
-     * TC-004: Поиск созданной задачи по её идентификатору (Положительный тест).
-     * Поиск по ID является наиболее надежным способом проверки, так как ID уникален
-     * и не зависит от возможных изменений в формулировке названия задачи.
-     */
+//    TC-004: Поиск созданной задачи по её идентификатору (Положительный тест).
     @Test
     public void testSearchIssue_TC004() {
         System.out.println("TC-004: Поиск созданной задачи");

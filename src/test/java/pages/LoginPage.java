@@ -29,51 +29,38 @@ public class LoginPage {
         PageFactory.initElements(driver, this);
     }
 
-    /**
-     * Открывает главную страницу приложения (страницу авторизации).
-     */
+
     public void open() {
         driver.get("http://localhost:8080");
     }
 
-    /**
-     * Вводит имя пользователя в соответствующее поле.
-     */
+
     public void enterUsername(String username) {
         wait.until(ExpectedConditions.visibilityOf(usernameField));
         usernameField.clear();
         usernameField.sendKeys(username);
     }
 
-    /**
-     * Вводит пароль в соответствующее поле.
-     */
     public void enterPassword(String password) {
         wait.until(ExpectedConditions.visibilityOf(passwordField));
         passwordField.clear();
         passwordField.sendKeys(password);
     }
 
-    /**
-     * Нажимает кнопку входа в систему.
-     */
+
     public void clickLoginButton() {
         wait.until(ExpectedConditions.elementToBeClickable(loginButton));
         loginButton.click();
     }
 
-    /**
-     * Выполняет полный процесс авторизации.
-     */
+
     public void login(String username, String password) {
         enterUsername(username);
         enterPassword(password);
         clickLoginButton();
     }
 
-    /**
-     * Проверяет, что страница авторизации успешно загружена.
-     */
+
     public boolean isLoginPageLoaded() {
         try {
             wait.until(ExpectedConditions.visibilityOf(usernameField));

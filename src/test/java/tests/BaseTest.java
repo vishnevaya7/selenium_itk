@@ -15,17 +15,11 @@ public class BaseTest {
 
     protected static final String BASE_URL = "http://localhost:8080";
 
-    /**
-     * Возвращает экземпляр WebDriver, привязанный к текущему потоку выполнения.
-     * Это обеспечивает потокобезопасность при параллельном запуске тестов.
-     */
     public WebDriver getDriver() {
         return driverThreadLocal.get();
     }
 
-    /**
-     * Инициализирует и настраивает WebDriver перед выполнением каждого теста.
-     */
+//    настройка веб драйвера
     @BeforeMethod
     public void setUp() {
         WebDriverManager.chromedriver().setup();
@@ -42,10 +36,7 @@ public class BaseTest {
         System.out.println("Браузер создан (Поток: " + Thread.currentThread().getId() + ")");
     }
 
-    /**
-     * Завершает работу WebDriver и очищает ресурсы после выполнения каждого теста.
-     * Аннотация alwaysRun = true гарантирует выполнение даже в случае падения теста.
-     */
+
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
         WebDriver driver = driverThreadLocal.get();

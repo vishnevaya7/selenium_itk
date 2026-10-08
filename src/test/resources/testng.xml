@@ -3,7 +3,7 @@
 
 <suite name="YouTrack Automation Suite" parallel="methods" thread-count="3" data-provider-thread-count="2">
 
-    <!-- Глобальная регистрация слушателя для создания скриншотов при падении тестов -->
+    <!-- глобальная регистрация слушателя для создания скриншотов при падении тестов -->
     <listeners>
         <listener class-name="utils.ScreenshotListener"/>
     </listeners>

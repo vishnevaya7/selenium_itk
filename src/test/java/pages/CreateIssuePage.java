@@ -10,9 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-/**
- * Page Object для страницы создания новой задачи в YouTrack.
- */
 public class CreateIssuePage {
 
     private final WebDriver driver;
@@ -33,36 +30,24 @@ public class CreateIssuePage {
         PageFactory.initElements(driver, this);
     }
 
-    /**
-     * Вводит название задачи в поле Summary..
-     */
+
     public void enterSummary(String summary) {
         wait.until(ExpectedConditions.visibilityOf(summaryField));
         summaryField.clear();
         summaryField.sendKeys(summary);
     }
 
-    /**
-     * Вводит описание задачи.
-     * Использует Ctrl+A + Backspace для надежной очистки contenteditable поля.
-     */
     public void enterDescription(String description) {
         wait.until(ExpectedConditions.visibilityOf(descriptionField));
         descriptionField.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.BACK_SPACE);
         descriptionField.sendKeys(description);
     }
 
-    /**
-     * Нажимает кнопку создания задачи.
-     */
     public void clickCreate() {
         wait.until(ExpectedConditions.elementToBeClickable(createButton));
         createButton.click();
     }
 
-    /**
-     * Выполняет полный сценарий создания задачи.
-     */
     public void createIssue(String summary, String description) {
         enterSummary(summary);
         enterDescription(description);

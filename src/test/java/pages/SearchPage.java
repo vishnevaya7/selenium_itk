@@ -25,18 +25,13 @@ public class SearchPage {
         PageFactory.initElements(driver, this);
     }
 
-    /**
-     * Открывает страницу со списком задач (Issues).
-     */
+
     public void openIssuesPage() {
         driver.get("http://localhost:8080/issues");
         System.out.println("Перешли на страницу Issues");
     }
 
-    /**
-     * Вводит поисковый запрос и инициирует поиск.
-     * Использует комбинацию Ctrl+A + Backspace для гарантированной очистки поля ввода.
-     */
+//    тк при прошлом поиске остается поле задачи, я его очищаю и ищу занаво что мне нужно
     public void enterSearchQuery(String query) {
         wait.until(ExpectedConditions.visibilityOf(searchInput));
         searchInput.click();
@@ -53,9 +48,7 @@ public class SearchPage {
         System.out.println("Введен поисковый запрос: " + query);
     }
 
-    /**
-     * Проверяет наличие задачи с указанным названием или ID в результатах поиска.
-     */
+//    задачу ищу по id или по названию можно
     public boolean isIssueFound(String taskName) {
         try {
             By locator = By.xpath("//a[contains(text(), '" + taskName + "')]");

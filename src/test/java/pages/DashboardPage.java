@@ -33,10 +33,7 @@ public class DashboardPage {
         PageFactory.initElements(driver, this);
     }
 
-    /**
-     * Закрывает окна онбординга и сопутствующие уведомления,
-     * так как каждый новый экземпляр браузера запускается без cookies.
-     */
+//    закрытие онбординга, тк в чистом новом браузере тест выполянется
     public void dismissOnboardingIfPresent() {
         try {
             if (skipTourButton.isDisplayed()) {
@@ -59,10 +56,7 @@ public class DashboardPage {
             // Онбординг уже закрыт или не отображается на данной странице
         }
     }
-
-    /**
-     * Проверяет успешность входа по наличию аватара пользователя на странице.
-     */
+//    заходит по аватару пользователя
     public boolean isDashboardLoaded() {
         try {
             wait.until(ExpectedConditions.visibilityOf(userAvatar));
@@ -72,14 +66,12 @@ public class DashboardPage {
         }
     }
 
-    /**
-     * Выполняет выход из системы.
-     */
+
     public void logout() {
         wait.until(ExpectedConditions.elementToBeClickable(userAvatar));
         userAvatar.click();
 
-        // Небольшая пауза для гарантированной отрисовки всплывающего меню в DOM
+        // небольшая пауза для гарантированной отрисовки всплывающего меню в DOM
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
