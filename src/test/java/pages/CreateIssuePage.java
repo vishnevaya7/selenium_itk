@@ -4,32 +4,23 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
+public class CreateIssuePage extends BasePage {
 
-public class CreateIssuePage {
-
-    private final WebDriver driver;
-    private final WebDriverWait wait;
-
-    @FindBy(css = "[data-test='summary']")
+    @FindBy(xpath = "//textarea[@data-test='summary']")
     private WebElement summaryField;
 
-    @FindBy(css = "[data-test='wysiwyg-editor-content']")
+    //
+    @FindBy(xpath = "//div[@data-test='wysiwyg-editor-content']")
     private WebElement descriptionField;
 
-    @FindBy(css = "[data-test='submit-button']")
+    @FindBy(xpath = "//button[@data-test='submit-button']")
     private WebElement createButton;
 
     public CreateIssuePage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
-
 
     public void enterSummary(String summary) {
         wait.until(ExpectedConditions.visibilityOf(summaryField));

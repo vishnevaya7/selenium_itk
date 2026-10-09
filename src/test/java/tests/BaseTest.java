@@ -10,16 +10,16 @@ import org.testng.annotations.BeforeMethod;
 import java.time.Duration;
 
 public class BaseTest {
-
     private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
-
     protected static final String BASE_URL = "http://localhost:8080";
 
+
+    //возвращает экземпляр WebDriver, привязанный к текущему потоку
     public WebDriver getDriver() {
         return driverThreadLocal.get();
     }
 
-//    настройка веб драйвера
+    //создание и инициализация браузера перед каждым тестом
     @BeforeMethod
     public void setUp() {
         WebDriverManager.chromedriver().setup();
@@ -32,11 +32,10 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         driverThreadLocal.set(driver);
-
         System.out.println("Браузер создан (Поток: " + Thread.currentThread().getId() + ")");
     }
 
-
+    // закрытие браузера после завершения каждого теста
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
         WebDriver driver = driverThreadLocal.get();
@@ -45,7 +44,7 @@ public class BaseTest {
                 driver.quit();
                 System.out.println("Браузер закрыт (Поток: " + Thread.currentThread().getId() + ")");
             } catch (Exception e) {
-                System.err.println("Не удалось закрыть браузер: " + e.getMessage());
+                System.err.println("Браузер не закрыт: " + e.getMessage());
             } finally {
                 driverThreadLocal.remove();
             }

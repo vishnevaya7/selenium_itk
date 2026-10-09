@@ -3,14 +3,17 @@
 
 <suite name="YouTrack Automation Suite" parallel="methods" thread-count="3" data-provider-thread-count="2">
 
-    <!-- глобальная регистрация слушателя для создания скриншотов при падении тестов -->
     <listeners>
         <listener class-name="utils.ScreenshotListener"/>
     </listeners>
 
-    <test name="Login and Issue Management Tests">
+    <test name="All Functional Tests">
         <classes>
             <class name="tests.LoginTest"/>
+            <class name="tests.CreateIssueTest"/>
+            <class name="tests.SearchIssueTest"/>
+            <class name="tests.LogoutTest"/>
+            <class name="tests.DeleteIssueTest"/>
         </classes>
     </test>
 

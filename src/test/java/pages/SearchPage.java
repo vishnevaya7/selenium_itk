@@ -5,33 +5,22 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
+public class SearchPage extends BasePage {
 
-public class SearchPage {
-
-    private final WebDriver driver;
-    private final WebDriverWait wait;
-
-    @FindBy(css = "input[placeholder='Search for text or add a filter']")
+    @FindBy(xpath = "//input[@placeholder='Search for text or add a filter']")
     private WebElement searchInput;
 
     public SearchPage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
-
 
     public void openIssuesPage() {
         driver.get("http://localhost:8080/issues");
         System.out.println("Перешли на страницу Issues");
     }
 
-//    тк при прошлом поиске остается поле задачи, я его очищаю и ищу занаво что мне нужно
     public void enterSearchQuery(String query) {
         wait.until(ExpectedConditions.visibilityOf(searchInput));
         searchInput.click();
@@ -48,10 +37,10 @@ public class SearchPage {
         System.out.println("Введен поисковый запрос: " + query);
     }
 
-//    задачу ищу по id или по названию можно
+    //проверка что задача есть, поиск идет по id или по названию
     public boolean isIssueFound(String taskName) {
         try {
-            By locator = By.xpath("//a[contains(text(), '" + taskName + "')]");
+            By locator = By.xpath("//tr[contains(@data-test, 'ring-table-row " + taskName + "')]");
             wait.until(ExpectedConditions.presenceOfElementLocated(locator));
             return true;
         } catch (Exception e) {
