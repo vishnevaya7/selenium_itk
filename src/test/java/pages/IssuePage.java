@@ -21,7 +21,6 @@ public class IssuePage extends BasePage {
     @FindBy(xpath = "//button[@data-test='confirm-ok-button']")
     private WebElement confirmDeleteButton;
 
-
     public IssuePage(WebDriver driver) {
         super(driver);
     }
@@ -37,7 +36,10 @@ public class IssuePage extends BasePage {
         searchInput.sendKeys(query);
         searchInput.sendKeys(Keys.ENTER);
 
-        try { Thread.sleep(3000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        // ждем пока результаты поиска обновятся
+        wait.until(ExpectedConditions.not(
+                ExpectedConditions.textToBePresentInElement(searchInput, query)
+        ));
     }
 
     public boolean isIssueFound(String taskName) {
@@ -62,6 +64,9 @@ public class IssuePage extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(deleteIssueButton)).click();
         wait.until(ExpectedConditions.elementToBeClickable(confirmDeleteButton)).click();
 
-        try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        // ждем пока задача исчезнет со страницы
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(
+                By.xpath("//a[contains(text(), '" + issueId + "')]")
+        ));
     }
 }

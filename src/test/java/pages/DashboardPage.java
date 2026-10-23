@@ -30,13 +30,7 @@ public class DashboardPage extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(userAvatar));
         userAvatar.click();
 
-        // небольшая пауза, чтобы меню успело открыться
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-
+        // ждем пока кнопка logout появится и станет кликабельной
         wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
         logoutButton.click();
     }

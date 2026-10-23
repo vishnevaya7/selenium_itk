@@ -28,12 +28,11 @@ public class SearchPage extends BasePage {
         searchInput.sendKeys(query);
         searchInput.sendKeys(Keys.ENTER);
 
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            e.printStackTrace();
-        }
+        // ждем появления результатов поиска
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+                By.cssSelector("table, [data-test='ring-table']")
+        ));
+
         System.out.println("Введен поисковый запрос: " + query);
     }
 
