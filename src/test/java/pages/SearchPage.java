@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import utils.ConfigReader;
 
 public class SearchPage extends BasePage {
 
@@ -17,7 +18,8 @@ public class SearchPage extends BasePage {
     }
 
     public void openIssuesPage() {
-        driver.get("http://localhost:8080/issues");
+        // берем URL из конфига вместо хардкода
+        driver.get(ConfigReader.getProperty("base.url") + ConfigReader.getProperty("issues.path"));
         System.out.println("Перешли на страницу Issues");
     }
 

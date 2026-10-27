@@ -21,9 +21,13 @@ public class CsvReader {
                     isFirstLine = false;
                     continue;
                 }
+                String[] values = line.split(",", -1);
 
-                // разделяем строку по запятой
-                String[] values = line.split(",");
+                // защитная проверка: если строка пустая, пропускаем
+                if (values.length > 0 && values[0].trim().isEmpty() && values.length == 1) {
+                    continue;
+                }
+
                 data.add(values);
             }
         } catch (IOException e) {

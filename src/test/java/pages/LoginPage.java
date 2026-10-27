@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import utils.ConfigReader;
 
 public class LoginPage extends BasePage {
 
@@ -21,7 +22,8 @@ public class LoginPage extends BasePage {
     }
 
     public void open() {
-        driver.get("http://localhost:8080");
+        // берем базовый URL и путь к логину из конфига
+        driver.get(ConfigReader.getProperty("base.url") + ConfigReader.getProperty("login.path"));
     }
 
     public void enterUsername(String username) {

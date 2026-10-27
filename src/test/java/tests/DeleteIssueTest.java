@@ -1,30 +1,29 @@
 package tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pages.DashboardPage;
 import pages.IssuePage;
-import pages.LoginPage;
+import utils.ConfigReader;
 import utils.ScreenshotListener;
 
 @Listeners(ScreenshotListener.class)
 public class DeleteIssueTest extends BaseTest {
 
-//    TC-006: Удаление задачи (Положительный тест)
+    @BeforeMethod
+    public void setUpAuth() {
+        loginAsAdmin(); // используем фикстуру из BaseTest
+    }
 
+    // TC-006: Удаление задачи (Положительный тест)
     // тест по дефолту false, тк делает ситуацию с флаки тестами, он есть в xml, но запускаю после всех тестов
     @Test(enabled = false)
     public void testDeleteIssue_TC006() {
+        System.out.println("TC-006: Удаление задачи");
 
-        // авторизация
-        LoginPage loginPage = new LoginPage(getDriver());
-        DashboardPage dashboardPage = new DashboardPage(getDriver());
-        loginPage.open();
-        loginPage.login("admin", "admin123");
-
-        // переход на страницу поиска/списка задач
-        getDriver().get("http://localhost:8080/issues");
+        // переход на страницу списка задач из конфига
+        getDriver().get(ConfigReader.getProperty("base.url") + ConfigReader.getProperty("issues.path"));
 
         // удаление задачи, проверяем что задача есть в списке перед удалением
         IssuePage issuePage = new IssuePage(getDriver());
